@@ -1,39 +1,40 @@
 /*******************************************************************************
- Midi_Theremin.ino - sketch turning Touch Board into Theremin (when in midi mode)
- 
- Connect 2 pads to control pitch and volume. (default pins 0&1)
- You can optionally connect 2 more pads for changing the midi instrument
- channel up and down. (default pins 2&3)
- 
- Once the Touch Board initializes, you have to calibrate the pitch & volume pads.
- Just touch the volume pad, then touch the pitch pad, and you are ready to play.
- (max and min levels are constantly updated, so touching sets the max levels)
- Then have fun playing!
-  
- Misc:
-   I used fscale (http://playground.arduino.cc/Main/Fscale) to logarithmically map
-   proximity values to pitch and volume. The defaults are set to maximize
-   sensitivity at large distances from the pads. (nonlinear_pitch & nonlinear_volume)
-   Only melodic instruments are implemented, no percussion instruments.
-   Default is high pitch and high volume when touch pads, but this can be reversed.
-     (direction_pitch & direction_volume)
-   Default starting instrument is ocarina
- 
- Written by Nathan Tomlin (nathan.a.tomlin@gmail.com) with tons of code
- stolen from Bare Conductive "Midi_Piano.ino":
- 
-     Bare Conductive On Board Midi Piano
+     Midi Theremin Code 
      ---------------------------------
      
-     Midi_Piano.ino - basic sketch that defines the Touch Board as a particular
-     instrument when placed in Real Time MIDI mode. Soldering is required.
+     Midi_Thermin.ino - sketch turning the Touch Board into a MIDI Theremin when
+     placed in Real Time MIDI mode. Soldering is required.
     
      To do this, connect the two solder bridges with "MIDI" and "MIDI ON" printed
-     next the the solder pads on the Touch Board.
+     next to the solder pads on the Touch Board. If you don't have a soldering iron
+     you can use Electric Paint to connect the two copper pads by placing a small
+     blob of the conductive paint across to form a bridge. 
+ 
+     To create a custom interface for the theremin connect 2 sensor pads to the
+     electrodes to control pitch and volume (default electrodes E0 & E1)
+     You can optionally connect 2 more pads for changing the midi instrument
+     channel up and down. (default electrodes E2 & E3)
+ 
+     Once the Touch Board initializes, you have to calibrate the pitch & volume pads.
+     Just touch the volume pad, then touch the pitch pad, and you are ready to play.
+     (max and min levels are constantly updated, so touching sets the max levels)
+     Then have fun playing!
+  
+     Misc:
+     I used fscale (http://playground.arduino.cc/Main/Fscale) to logarithmically map
+     proximity values to pitch and volume. The defaults are set to maximize
+     sensitivity at large distances from the pads. (nonlinear_pitch & nonlinear_volume)
+     Only melodic instruments are implemented, no percussion instruments.
+     Default is high pitch and high volume when touch pads, but this can be reversed.
+     (direction_pitch & direction_volume)
+     Default starting instrument is ocarina
+ 
+     Written by Nathan Tomlin (nathan.a.tomlin@gmail.com) with tons of code
+     stolen from Bare Conductive "Midi_Piano.ino"
      
-     Bare Conductive code written by Stefan Dzisiewski-Smith and Peter Krige. 
-     Much thievery from Nathan Seidle in this particular sketch. Thanks Nate - 
-     we owe you a cold beer!
+     "Midi_Piano.ino" (Bare Conductive code written by Stefan Dzisiewski-Smith and 
+     Peter Krige. Much thievery from Nathan Seidle in this particular sketch. 
+     Thanks Nate - we owe you a cold beer!)
      
      This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 
      Unported License (CC BY-SA 3.0) http://creativecommons.org/licenses/by-sa/3.0/

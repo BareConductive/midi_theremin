@@ -1,6 +1,6 @@
 <a href="http://www.bareconductive.com/"><img src="https://www.dropbox.com/s/5c4yatkrnqqbgrm/BareConductive.LOGO_553x221.jpg?dl=1" width="200px" alt="Bare Conductive" /></a>
 
-# Midi Theremin Code by Nathan Tomlin
+# MIDI Theremin Code by Nathan Tomlin
 
 Proximity sensitive Theremin with pitch and volume control, as well as touch sensitive buttons to change between different melodic instruments. Designed to run on the [Touch Board](http://www.bareconductive.com/shop/touch-board/).
 
@@ -17,8 +17,8 @@ Proximity sensitive Theremin with pitch and volume control, as well as touch sen
 ## Install
 
 1. Close the Arduino IDE if you have it open.
-1. Download the [.zip](https://github.com/BareConductive/light-switch/archive/public.zip) or clone the repository to your local machine - if downloading the .zip, extract the contents somewhere that suits you.
-1. Take the **Light_Switch** folder and move it to **Arduino Sketchbook Folder**. This will be different for each operating system: 
+1. Download the [.zip](https://github.com/BareConductive/midi_theremin/archive/public.zip) or clone the repository to your local machine - if downloading the .zip, extract the contents somewhere that suits you.
+1. Take the **Midi_Theremin** folder and move it to **Arduino Sketchbook Folder**. This will be different for each operating system: 
 
 	**Windows**
 	
