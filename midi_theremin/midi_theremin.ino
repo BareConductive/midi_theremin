@@ -11,9 +11,9 @@
      blob of the conductive paint across to form a bridge. 
  
      To create a custom interface for the theremin connect 2 sensor pads to the
-     electrodes to control pitch and volume (default electrodes E0 & E1)
+     electrodes to control pitch and volume (default electrodes E0 & E11)
      You can optionally connect 2 more pads for changing the midi instrument
-     channel up and down. (default electrodes E2 & E3)
+     channel up and down. (default electrodes E4 & E7)
  
      Once the Touch Board initializes, you have to calibrate the pitch & volume pads.
      Just touch the volume pad, then touch the pitch pad, and you are ready to play.
@@ -61,9 +61,9 @@ SoftwareSerial mySerial(12, 10); //Soft TX on 10, we don't use RX in this code
 
 //Touch Board pin setup
 byte pin_pitch = 0;       // pin to control pitch
-byte pin_volume = 1;      // pint to control volume
-byte pin_instr_up = 2;    // pin to control instrument change up 
-byte pin_instr_down = 3;  // pin to control instrument change down
+byte pin_volume = 11;      // pint to control volume
+byte pin_instr_up = 4;    // pin to control instrument change up 
+byte pin_instr_down = 7;  // pin to control instrument change down
 
 // Theremin setup
 byte min_note = 40;  // lowest midi pitch
