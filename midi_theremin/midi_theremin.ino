@@ -1,53 +1,57 @@
 /*******************************************************************************
-     Midi Theremin Code 
-     ---------------------------------
-     
-     Midi_Thermin.ino - sketch turning the Touch Board into a MIDI Theremin when
-     placed in Real Time MIDI mode. Soldering is required.
-    
-     To do this, connect the two solder bridges with "MIDI" and "MIDI ON" printed
-     next to the solder pads on the Touch Board. If you don't have a soldering iron
-     you can use Electric Paint to connect the two copper pads by placing a small
-     blob of the conductive paint across to form a bridge. 
- 
-     To create a custom interface for the theremin connect 2 sensor pads to the
-     electrodes to control pitch and volume (default electrodes E0 & E11)
-     You can optionally connect 2 more pads for changing the midi instrument
-     channel up and down. (default electrodes E4 & E7)
- 
-     Once the Touch Board initializes, you have to calibrate the pitch & volume pads.
-     Just touch the volume pad, then touch the pitch pad, and you are ready to play.
-     (max and min levels are constantly updated, so touching sets the max levels)
-     Then have fun playing!
+  Midi Theremin Code 
+  ---------------------------------
+   
+  Midi_Theremin.ino - sketch turning the Touch Board into a MIDI Theremin when
+  placed in Real Time MIDI mode. Soldering or use of Electric Paint is required.
+
+  To do this, connect the two solder bridges with "MIDI" and "MIDI ON" printed
+  next to the solder pads on the Touch Board. If you don't have a soldering iron
+  you can use Electric Paint to connect the two copper pads by placing a small
+  blob of the conductive paint across to form a bridge. 
+
+  To create a custom interface for the theremin, connect 2 sensor pads to the
+  electrodes to control pitch and volume (default electrodes E0 & E1)
+  You can optionally connect 2 more pads for changing the midi instrument
+  channel up and down (default electrodes E2 & E3).
+
+  Once the Touch Board initialises, you have to calibrate the pitch & volume pads.
+  Just touch the volume pad, then touch the pitch pad, and you are ready to play.
+  (max and min levels are constantly updated, so touching sets the max levels)
+  Then have fun playing!
+
+  Misc:
   
-     Misc:
-     I used fscale (http://playground.arduino.cc/Main/Fscale) to logarithmically map
-     proximity values to pitch and volume. The defaults are set to maximize
-     sensitivity at large distances from the pads. (nonlinear_pitch & nonlinear_volume)
-     Only melodic instruments are implemented, no percussion instruments.
-     Default is high pitch and high volume when touch pads, but this can be reversed.
-     (direction_pitch & direction_volume)
-     Default starting instrument is ocarina
- 
-     Written by Nathan Tomlin (nathan.a.tomlin@gmail.com) with tons of code
-     stolen from Bare Conductive "Midi_Piano.ino"
-     
-     "Midi_Piano.ino" (Bare Conductive code written by Stefan Dzisiewski-Smith and 
-     Peter Krige. Much thievery from Nathan Seidle in this particular sketch. 
-     Thanks Nate - we owe you a cold beer!)
-     
-     This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 
-     Unported License (CC BY-SA 3.0) http://creativecommons.org/licenses/by-sa/3.0/
-     
-     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-     THE SOFTWARE.
+  I used fscale (http://playground.arduino.cc/Main/Fscale) to logarithmically map
+  proximity values to pitch and volume. The defaults are set to maximize
+  sensitivity at large distances from the pads. (nonlinear_pitch & nonlinear_volume)
+  Only melodic instruments are implemented, no percussion instruments.
+  Default is high pitch and high volume when touch pads, but this can be reversed.
+  (direction_pitch & direction_volume)
+  Default starting instrument is ocarina
+
+  Written by Nathan Tomlin (nathan.a.tomlin@gmail.com) with tons of code
+  stolen from Bare Conductive "Midi_Piano.ino"
+   
+  "Midi_Piano.ino" (Bare Conductive code written by Stefan Dzisiewski-Smith and 
+  Peter Krige. Much thievery from Nathan Seidle in this particular sketch. 
+  Thanks Nate - we owe you a cold beer!)
+   
+  This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 
+  Unported License (CC BY-SA 3.0) http://creativecommons.org/licenses/by-sa/3.0/
+   
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  THE SOFTWARE.
 
 *******************************************************************************/
+
+// compiler error handling
+#include "Compiler_Errors.h"
 
 // serial rate
 #define baudRate 57600
@@ -61,9 +65,9 @@ SoftwareSerial mySerial(12, 10); //Soft TX on 10, we don't use RX in this code
 
 //Touch Board pin setup
 byte pin_pitch = 0;       // pin to control pitch
-byte pin_volume = 11;      // pint to control volume
-byte pin_instr_up = 4;    // pin to control instrument change up 
-byte pin_instr_down = 7;  // pin to control instrument change down
+byte pin_volume = 1;      // pint to control volume
+byte pin_instr_up = 2;    // pin to control instrument change up 
+byte pin_instr_down = 3;  // pin to control instrument change down
 
 // Theremin setup
 byte min_note = 40;  // lowest midi pitch
@@ -80,9 +84,6 @@ byte instrument = 80 - 1;  // starting instrument (-1 b/c I think instrument lis
 byte min_instrument = 0;  // 
 byte max_instrument = 127;  // max is 127
 
-
-
-
 // initialization stuff for proximity
 int level_pitch = 0;
 int level_pitch_old = 0;
@@ -97,13 +98,11 @@ int max_level_pitch = 0; // dummy start values - updated during running
 int min_level_volume = 1000; // dummy start values - updated during running
 int max_level_volume = 0; // dummy start values - updated during running
 
-
 //VS1053 setup
 //byte note = 0; //The MIDI note value to be played
 byte resetMIDI = 8; //Tied to VS1053 Reset line
 byte ledPin = 13; //MIDI traffic inidicator
 byte velocity = 60;  // midi note velocity for turning on and off
-
 
 void setup(){
   Serial.begin(baudRate);
