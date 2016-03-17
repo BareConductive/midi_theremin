@@ -392,8 +392,7 @@ To play the different sounds, select an instrument # like 5, then play notes 27 
 */
 
 
-float fscale( float originalMin, float originalMax, float newBegin, float
-newEnd, float inputValue, float curve){
+float fscale( float originalMin, float originalMax, float newBegin, float newEnd, float inputValue, float curve){
 
   float OriginalRange = 0;
   float NewRange = 0;
